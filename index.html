@@ -1,0 +1,122 @@
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Facebook Post</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="wrapper">
+      <section class="post">
+        <header>Create Post</header>
+        <form action="#" id="postForm" >
+          <div class="content">
+            <img src="./logo.jpeg" alt="logo">
+            <div class="details">
+              <p>Usama Arain</p>
+              <div class="privacy">
+                <i class="fas fa-user-friends"></i>
+                <span>Friends</span>
+                <i class="fas fa-caret-down"></i>
+              </div>
+            </div>
+          </div>
+          <textarea class="text" placeholder="What's on your mind, Hafiz Rizwan?" spellcheck="false"></textarea>
+          <div class="theme-emoji">
+            <img src="./theme.svg" alt="theme">
+            <img src="./smile pic.png" alt="smile">
+          </div>
+          <div class="options">
+            <p>Add to your post</p>
+            <ul class="list">
+              <li><img src="./gallery-icon.jpg" alt="gallery"></li>
+              <li><img src="./tag.fb.png" alt="gallery" class="tag"></li>
+              <li><img src="./smile.1.png" alt="gallery" class="smile"></li>
+              <li><img src="./mic.png" alt="gallery" class="mic"></li>
+              <li><img src="./save.png" alt="gallery"></li>
+            </ul>
+          </div>
+          <button onclick="addTask()">Post</button>
+        </form>
+      </section>
+      
+
+     
+    </div>
+    <div class="post-list-container">
+      <ul  id="post-list" class="post-list">
+        
+      </ul>
+    </div>
+  </div>
+  
+
+  <script>
+    const container = document.querySelector(".container"),
+      privacy = container.querySelector(".post .privacy"),
+      arrowBack = container.querySelector(".audience .arrow-back"),
+      postForm = document.querySelector(".post form"),
+      postList = document.getElementById("post-list");
+
+
+
+    function addTask() {
+  // Get the text from the post form
+  const privacy2 = postForm.querySelector(".text");
+
+  if (privacy2.value.trim() === '') {
+    alert('You must write something!');
+  } else {
+    let li = document.createElement('li');
+    li.innerHTML = `
+      <div class="post-content">
+        <div class="imgMe"><img src="./logo.jpeg" alt="logo"> <h3>USama Arain</h3> </div>
+        <p>${privacy2.value}</p>
+        <div class="post-buttons">
+          <button class="like-btn">Like</button>
+          <button class="comment-btn">Comment</button>
+          <button class="share-btn">Share</button>
+          <button class="cross-btn" onclick="removeTask(this)">✖</button>
+        </div>
+      </div>
+    `;
+    postList.appendChild(li);
+  }
+
+  privacy2.value = '';
+  saveData();
+  
+}
+
+function removeTask(button) {
+  
+  // Traverse up the DOM to find the parent li and remove it
+  let li = button.closest('li');
+  li.remove();
+  
+  // Save the updated list
+  saveData();
+}
+
+function saveData() {
+  localStorage.setItem('data', postList.innerHTML);
+}
+
+(function showList() {
+  
+    postList.innerHTML = localStorage.getItem('data');
+})()
+// showList();
+
+
+
+  </script>
+</body>
+</html>
+
+
